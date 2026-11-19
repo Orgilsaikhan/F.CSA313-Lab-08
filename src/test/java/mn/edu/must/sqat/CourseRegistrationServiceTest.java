@@ -135,11 +135,13 @@ class CourseRegistrationServiceTest {
 
     // A6 — assertThrows
     @Test
-    @DisplayName("A6: null оролт → IllegalArgumentException, хамаарлуудтай огт харьцаагүй")
+    @DisplayName("A6: studentId эсвэл courseId null → тус бүр IllegalArgumentException, хамаарлуудтай огт харьцаагүй")
     void register_nullArgument_throwsAndNoInteractions() {
-        // Act + Assert
+        // Act + Assert — аргумент БҮРИЙН null-ийг тусад нь (мутант 3-ын дараа нэмсэн)
         assertThrows(IllegalArgumentException.class,
-                () -> service.register(null, COURSE_ID));
+                () -> service.register(null, COURSE_ID), "studentId = null");
+        assertThrows(IllegalArgumentException.class,
+                () -> service.register(STUDENT_ID, null), "courseId = null");
 
         verifyNoInteractions(repository, emailSender);
     }
